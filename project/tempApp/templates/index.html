@@ -1,0 +1,94 @@
+{% extends 'base.html' %}
+
+{% block title %}-home{% endblock %}
+
+{% block content %}
+
+  <header>
+    <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
+      <ol class="carousel-indicators">
+        <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active" style="background-color:black !important;"></li>
+        <li data-target="#carouselExampleIndicators" data-slide-to="1" style="background-color:black !important;"></li>
+        <li data-target="#carouselExampleIndicators" data-slide-to="2" style="background-color:black !important;"></li>
+      </ol>
+      <div class="carousel-inner" role="listbox" >
+        <!-- Slide One - Set the background image for this slide in the line below -->
+        <div class="carousel-item active" style="background-image: url('/static/img/banner1.png'); background-size: contain;">
+        </div>
+        <!-- Slide Two - Set the background image for this slide in the line below -->
+        <div class="carousel-item" style="background-image: url('/static/img/banner2.png'); background-size: contain;">
+        </div>
+        <!-- Slide Three - Set the background image for this slide in the line below -->
+        <div class="carousel-item" style="background-image: url('/static/img/banner3.png');background-size: contain;">
+        </div>
+      </div>
+      <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
+        <span class="carousel-control-prev-icon" aria-hidden="true" style="background-color:black !important;"></span>
+        <span class="sr-only">Previous</span>
+      </a>
+      <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
+        <span class="carousel-control-next-icon" aria-hidden="true" style="background-color:black !important;"></span>
+        <span class="sr-only">Next</span>
+      </a>
+    </div>
+  </header>
+
+  <!-- Page Content -->
+  <div class="container">
+
+    <br><hr><br>
+    <h1 class="my-4" style="float: left;">Many questions are waiting for you!</h1>
+    <h1 class="my-4" style="float: right;"><a href="{% url 'question' %}"><small>more ></small></a></h1>
+
+    <!-- Marketing Icons Section -->
+    <div class="row" style="clear: both;">
+      {% for question in quests%}
+        {% if question.matching == None %}
+        <div class="col-lg-4 mb-4">
+          <div class="card h-100">
+            <h4 class="card-header"><a href="{% url 'question_detail' question.id %}">{{question.title}}</a></h4>
+            <div class="card-body" style="min-height: 150px !important;">
+              <p class="card-text">{{question.contents}}</p>
+            </div>
+            <div class="card-footer">
+              <div style="color: red; float:left">{{question.pub_datetime}} ago</div>
+              <a href="{% url 'question_detail' question.id %}" class="btn btn-primary" style="float:right !important;">Match with Me!</a>
+            </div>
+          </div>
+        </div>
+        {% endif %}
+      {% endfor %}
+    </div>
+    <!-- /.row -->
+
+    <hr><br>
+    <!-- Portfolio Section -->
+    <h1 class="my-4" style="float: left;">Many solutions what you looking for!</h1>
+    <h1 class="my-4" style="float: right;"><a href="{% url 'solution' %}"><small>more ></small></a></h1>
+
+    <div class="row" style="clear: both;">
+      {% for solution in sols%}
+      <div class="col-lg-4 col-sm-6 portfolio-item">
+        <div class="card h-100">
+          <a href="{% url 'solution_detail' solution.id %}"><video class="card-img-top" preload="metadata" src="{{solution.video.url}}#t=0.5"></video></a>
+          <div class="card-body">
+            <h4 class="card-title">
+              <a href="{% url 'solution_detail' solution.id %}">{{ solution.title }}</a>
+            </h4>
+            <p class="card-text">writer: {{ solution.writer }}</p>
+            <p class="card-text">fee: ${{ solution.fee}}</p>
+            <p class="card-text">uploaded at: {{ solution.pub_datetime }}</p>
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+    <!-- /.row -->
+
+    <hr><br>
+
+  
+
+    <br><br><br>
+
+  {% endblock %}

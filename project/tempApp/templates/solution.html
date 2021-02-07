@@ -1,0 +1,62 @@
+{% extends 'base.html' %}
+
+{% block title %}-solution{% endblock %}
+
+{% block content %}
+
+<!-- Page Content -->
+<div class="container">
+
+  <!-- Page Heading/Breadcrumbs -->
+  <h1 class="mt-4 mb-3">Solution Board
+    <small style="color: lightslategray;">you can find every questions and answer video!</small>
+  </h1>
+
+  <div class="breadcrumb">
+    <form>
+        <input name="" class="" placeholder="SEARCH...">
+        <button type="submit" class="#"> SEARCH  </button>                                                 
+    </form>
+  </div>
+
+  <!-- Blog Post -->
+  {% for solution in solutions.all reversed%}
+  <div class="card mb-4">
+    <div class="card-body">
+      <div class="row">
+        <div class="col-lg-6">
+          <a href="{% url 'solution_detail' solution.id %}">
+            <video class="img-fluid rounded" preload="metadata" src="{{solution.video.url}}#t=0.5"></video>
+          </a>
+        </div>
+        <div class="col-lg-6">
+          <h2 class="card-title">{{solution.title}}</h2>
+          <p class="card-text">writer: {{solution.writer}}</p>
+          <p class="card-text">posted at: {{solution.pub_datetime}}</p>
+          <p class="card-text">fee: ${{solution.fee}}</p>
+          <a href="{% url 'solution_detail' solution.id %}" class="btn btn-primary">Watch More &rarr;</a>
+        </div>
+      </div>
+    </div>
+    <div class="card-footer text-muted">
+      Posted on {{solution.pub_datetime}}
+      <a href="#">{{solution.writer}}</a>
+    </div>
+  </div>
+  {% endfor %}
+
+  <!-- Pagination -->
+  <ul class="pagination justify-content-center mb-4">
+    <li class="page-item">
+      <a class="page-link" href="#">&larr; Older</a>
+    </li>
+    <li class="page-item disabled">
+      <a class="page-link" href="#">Newer &rarr;</a>
+    </li>
+  </ul>
+
+</div>
+<!-- /.container -->
+
+
+{% endblock %}
